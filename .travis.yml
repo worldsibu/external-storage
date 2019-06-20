@@ -22,8 +22,9 @@ go_import_path: github.com/kubernetes-incubator/external-storage
 
 install: true
 
-#script:
-#  - ./test.sh
+script:
+  #- ./test.sh
+  - echo "Do nothing"
 
 deploy:
   - provider: script
