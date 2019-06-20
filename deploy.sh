@@ -28,7 +28,9 @@ export REGISTRY=koumoul/
 
 docker login -u "${QUAY_USERNAME}" -p "${QUAY_PASSWORD}"
 
-provisioners=(
+make push-nfs-provisioner
+
+#provisioners=(
 #efs-provisioner
 #cephfs-provisioner
 #flex-provisioner
@@ -39,28 +41,28 @@ provisioners=(
 #local-volume-provisioner-bootstrap
 #local-volume-provisioner
 #nfs-client-provisioner
-nfs-provisioner
+#nfs-provisioner
 #openebs-provisioner
 #rbd-provisioner
-)
+#)
 
-regex="^($(IFS=\|; echo "${provisioners[*]}"))-(v[0-9]+\.[0-9]+\.[0-9]+-k8s1.[0-9]+)$"
-if [[ "${TRAVIS_TAG}" =~ $regex ]]; then
-	PROVISIONER="${BASH_REMATCH[1]}"
-	export VERSION="${BASH_REMATCH[2]}"
-	if [[ "${PROVISIONER}" = nfs-provisioner ]]; then
-		export REGISTRY=koumoul/
-	fi
-	echo "Pushing image '${PROVISIONER}' with tags '${VERSION}' and 'latest' to '${REGISTRY}'."
-	if [[ "${PROVISIONER}" = openebs-provisioner ]]; then
-		export DIMAGE="${REGISTRY}openebs-provisioner"
-		export DNAME="${QUAY_USERNAME}"
-		export DPASS="${QUAY_PASSWORD}"
-		pushd openebs; make; popd
-		make deploy-openebs-provisioner
-	else
-		make push-"${PROVISIONER}"
-	fi
-else
-	echo "Nothing to deploy"
-fi
+#regex="^($(IFS=\|; echo "${provisioners[*]}"))-(v[0-9]+\.[0-9]+\.[0-9]+-k8s1.[0-9]+)$"
+#if [[ "${TRAVIS_TAG}" =~ $regex ]]; then
+#PROVISIONER="${BASH_REMATCH[1]}"
+#export VERSION="${BASH_REMATCH[2]}"
+#if [[ "${PROVISIONER}" = nfs-provisioner ]]; then
+#	export REGISTRY=koumoul/
+#fi
+#echo "Pushing image '${PROVISIONER}' with tags '${VERSION}' and 'latest' to '${REGISTRY}'."
+#	if [[ "${PROVISIONER}" = openebs-provisioner ]]; then
+#		export DIMAGE="${REGISTRY}openebs-provisioner"
+#		export DNAME="${QUAY_USERNAME}"
+#		export DPASS="${QUAY_PASSWORD}"
+#		pushd openebs; make; popd
+#		make deploy-openebs-provisioner
+#	else
+#make push-"${PROVISIONER}"
+#	fi
+#else
+#	echo "Nothing to deploy"
+#fi
