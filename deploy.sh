@@ -26,7 +26,7 @@ fi
 
 export REGISTRY=worldsibu/
 
-docker login -u "${QUAY_USERNAME}" -p "${QUAY_PASSWORD}"
+docker login -u "${DOCKER_USERNAME}" -p "${DOCKER_PASSWORD}"
 
 make push-nfs-provisioner
 
