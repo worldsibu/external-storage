@@ -24,7 +24,7 @@ if [ "$TRAVIS_OS_NAME" = "osx" ]; then
   exit 0
 fi
 
-export REGISTRY=koumoul/
+export REGISTRY=worldsibu/
 
 docker login -u "${QUAY_USERNAME}" -p "${QUAY_PASSWORD}"
 
